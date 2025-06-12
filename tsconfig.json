@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "target": "es2022",
+    "allowJs": true,
+    "resolveJsonModule": true,
+    "moduleDetection": "force",
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "outDir": "dist",
+    "declaration": true,
+    "lib": ["es2022"],
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "toolkit/*": ["src/*"]
+    }
+  },
+  "include": ["src/index.ts", "src/tool.ts", "src/adapters/*.ts"],
+  "exclude": ["node_modules", "dist", "src/env.ts", "src/adapters/*.itest.ts"]
+}
