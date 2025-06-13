@@ -1,6 +1,6 @@
 {
   "name": "tool-adapters",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Tool adapters for AI SDKs.",
   "homepage": "https://github.com/catena-labs/tool-adapters#readme",
   "repository": {
