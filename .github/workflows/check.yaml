@@ -21,3 +21,8 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       - run: pnpm run check
+      - run: pnpm run test:integ
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.CI_ANTHROPIC_API_KEY }}
+          GOOGLE_API_KEY: ${{ secrets.CI_GOOGLE_API_KEY }}
+          OPENAI_API_KEY: ${{ secrets.CI_OPENAI_API_KEY }}

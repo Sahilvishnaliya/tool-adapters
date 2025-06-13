@@ -9,7 +9,6 @@ import {
   handleToolCalls as handleAnthropicToolCalls,
   toAnthropicTools
 } from "./anthropic"
-import { env } from "../env"
 import { tool } from "../tool"
 import {
   handleFunctionCalls as handleGoogleFunctionCalls,
@@ -44,7 +43,7 @@ const baseTools = [
 
 test("anthropic sdk", async () => {
   const client = new Anthropic({
-    apiKey: env.ANTHROPIC_API_KEY
+    apiKey: process.env.ANTHROPIC_API_KEY
   })
 
   const messages = [
@@ -89,7 +88,7 @@ test("anthropic sdk", async () => {
 
 test("openai chat completion", async () => {
   const client = new OpenAI({
-    apiKey: env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY
   })
 
   const messages = [
@@ -134,7 +133,7 @@ test("openai chat completion", async () => {
 
 test("openai responses", async () => {
   const client = new OpenAI({
-    apiKey: env.OPENAI_API_KEY
+    apiKey: process.env.OPENAI_API_KEY
   })
 
   const response = await client.responses.create({
@@ -173,7 +172,7 @@ test("openai responses", async () => {
 })
 
 test("google gen ai", async () => {
-  const ai = new GoogleGenAI({ apiKey: env.GOOGLE_API_KEY })
+  const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY })
 
   const response = await ai.models.generateContent({
     model: "gemini-2.0-flash",
@@ -224,7 +223,7 @@ test("google gen ai", async () => {
 
 test("vercel", async () => {
   const anthropic = createAnthropic({
-    apiKey: env.ANTHROPIC_API_KEY
+    apiKey: process.env.ANTHROPIC_API_KEY
   })
 
   const result = await generateText({
