@@ -1,7 +1,17 @@
 {
-  "name": "toolkit",
-  "version": "0.0.0",
-  "private": true,
+  "name": "tool-adapters",
+  "version": "0.0.1",
+  "description": "Tool adapters for AI SDKs.",
+  "homepage": "https://github.com/catena-labs/tool-adapters#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/catena-labs/tool-adapters.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Catena Labs",
+    "url": "https://catenalabs.com"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -59,5 +69,6 @@
     "ai": "^4.3.16",
     "openai": "^5.1.0"
   },
-  "packageManager": "pnpm@10.11.1"
+  "packageManager": "pnpm@10.11.1",
+  "issues": "https://github.com/catena-labs/tool-adapters/issues"
 }
