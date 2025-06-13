@@ -15,16 +15,12 @@
   "type": "module",
   "exports": {
     ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.js"
-    },
-    "./adapters/*": {
-      "types": "./dist/adapters/*.d.ts",
-      "import": "./dist/adapters/*.js"
-    },
-    "./core": {
       "types": "./dist/tool.d.ts",
       "import": "./dist/tool.js"
+    },
+    "./*": {
+      "types": "./dist/adapters/*.d.ts",
+      "import": "./dist/adapters/*.js"
     }
   },
   "files": [

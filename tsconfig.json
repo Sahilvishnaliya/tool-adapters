@@ -22,6 +22,6 @@
       "toolkit/*": ["src/*"]
     }
   },
-  "include": ["src/index.ts", "src/tool.ts", "src/adapters/*.ts"],
+  "include": ["src/tool.ts", "src/adapters/*.ts"],
   "exclude": ["node_modules", "dist", "src/env.ts", "src/adapters/*.itest.ts"]
 }

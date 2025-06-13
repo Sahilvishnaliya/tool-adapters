@@ -11,12 +11,9 @@ pnpm add tool-adapters
 ## Quick Start
 
 ```typescript
-import { tool } from "tool-adapters/core"
+import { tool } from "tool-adapters"
 import { z } from "zod"
-import {
-  toAnthropicTools,
-  handleToolCalls
-} from "tool-adapters/adapters/anthropic"
+import { toAnthropicTools, handleToolCalls } from "tool-adapters/anthropic"
 
 // Define your tools
 const baseTools = [
@@ -59,10 +56,7 @@ const toolResults = await handleToolCalls(response, baseTools)
 #### Anthropic
 
 ```typescript
-import {
-  toAnthropicTools,
-  handleToolCalls
-} from "tool-adapters/adapters/anthropic"
+import { toAnthropicTools, handleToolCalls } from "tool-adapters/anthropic"
 ```
 
 #### OpenAI
@@ -73,7 +67,7 @@ import {
   handleChatCompletionToolCalls,
   toResponsesTools,
   handleResponsesToolCalls
-} from "tool-adapters/adapters/openai"
+} from "tool-adapters/openai"
 ```
 
 #### Google AI
@@ -82,11 +76,11 @@ import {
 import {
   toFunctionDeclarations,
   handleFunctionCalls
-} from "tool-adapters/adapters/google"
+} from "tool-adapters/google"
 ```
 
 #### Vercel AI SDK
 
 ```typescript
-import { toVercelTools } from "tool-adapters/adapters/vercel"
+import { toVercelTools } from "tool-adapters/vercel"
 ```
