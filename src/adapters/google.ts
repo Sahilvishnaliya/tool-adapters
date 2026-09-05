@@ -34,7 +34,8 @@ export async function handleFunctionCalls(
         return
       }
 
-      const result = (await tool.execute(functionCall.args)) as unknown
+      const args: unknown = tool.parameters.parse(functionCall.args)
+      const result = (await tool.execute(args)) as unknown
 
       return {
         name: functionCall.name,

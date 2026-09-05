@@ -31,7 +31,8 @@ export async function handleToolCalls(
         return
       }
 
-      const response = (await tool.execute(toolCall.input)) as unknown
+      const args: unknown = tool.parameters.parse(toolCall.input)
+      const response = (await tool.execute(args)) as unknown
 
       const toolResult: Anthropic.ToolResultBlockParam = {
         type: "tool_result",
