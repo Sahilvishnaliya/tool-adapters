@@ -1,4 +1,4 @@
-import zodToJsonSchema from "zod-to-json-schema"
+import { toParameterSchema } from "../parameters"
 import { getToolMap } from "../tool"
 import type { ToolBase } from "../tool"
 import type { Anthropic } from "@anthropic-ai/sdk"
@@ -9,8 +9,8 @@ export function toAnthropicTools(tools: ToolBase[]): Anthropic.Tool[] {
       name: tool.name,
       description: tool.description,
       input_schema: {
-        ...zodToJsonSchema(tool.parameters),
-        type: "object"
+        ...toParameterSchema(tool),
+        type: "object" as const
       }
     }
   })
@@ -28,18 +28,22 @@ export async function handleToolCalls(
     toolCalls.map(async (toolCall) => {
       const tool = toolMap.get(toolCall.name)
       if (!tool) {
-        return
+        return {
+          type: "tool_result" as const,
+          tool_use_id: toolCall.id,
+          is_error: true,
+          content: JSON.stringify({ error: `Unknown tool: ${toolCall.name}` })
+        }
       }
 
-      const response = (await tool.execute(toolCall.input)) as unknown
+      const args: unknown = tool.parameters.parse(toolCall.input)
+      const response = (await tool.execute(args)) as unknown
 
-      const toolResult: Anthropic.ToolResultBlockParam = {
-        type: "tool_result",
+      return {
+        type: "tool_result" as const,
         tool_use_id: toolCall.id,
         content: JSON.stringify(response)
       }
-
-      return toolResult
     })
   )
 

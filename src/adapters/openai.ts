@@ -1,4 +1,4 @@
-import zodToJsonSchema from "zod-to-json-schema"
+import { toParameterSchema, toStrictParameterSchema } from "../parameters"
 import { getToolMap } from "../tool"
 import type { ToolBase } from "../tool"
 import type OpenAI from "openai"
@@ -11,7 +11,9 @@ export function toChatCompletionTools(
     function: {
       name: tool.name,
       description: tool.description,
-      parameters: zodToJsonSchema(tool.parameters)
+      parameters: toParameterSchema(
+        tool
+      ) as OpenAI.FunctionDefinition["parameters"]
     }
   }))
 }
@@ -28,7 +30,13 @@ export async function handleChatCompletionToolCalls(
     toolCalls.map(async (toolCall) => {
       const tool = toolMap.get(toolCall.function.name)
       if (!tool) {
-        return
+        return {
+          role: "tool" as const,
+          tool_call_id: toolCall.id,
+          content: JSON.stringify({
+            error: `Unknown tool: ${toolCall.function.name}`
+          })
+        }
       }
 
       const args: unknown = tool.parameters.parse(
@@ -54,7 +62,9 @@ export function toResponsesTools(
     type: "function",
     name: tool.name,
     description: tool.description,
-    parameters: zodToJsonSchema(tool.parameters),
+    parameters: toStrictParameterSchema(
+      tool
+    ) as OpenAI.Responses.FunctionTool["parameters"],
     strict: true
   }))
 }
@@ -73,7 +83,11 @@ export async function handleResponsesToolCalls(
     toolCalls.map(async (toolCall) => {
       const tool = toolMap.get(toolCall.name)
       if (!tool) {
-        return
+        return {
+          type: "function_call_output" as const,
+          call_id: toolCall.call_id,
+          output: JSON.stringify({ error: `Unknown tool: ${toolCall.name}` })
+        }
       }
 
       const args: unknown = tool.parameters.parse(

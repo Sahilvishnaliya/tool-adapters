@@ -1,4 +1,4 @@
-import zodToJsonSchema from "zod-to-json-schema"
+import { toParameterSchema } from "../parameters"
 import { getToolMap } from "../tool"
 import type { ToolBase } from "../tool"
 import type {
@@ -14,7 +14,7 @@ export function toFunctionDeclarations(
   return tools.map((tool) => ({
     description: tool.description,
     name: tool.name,
-    parameters: zodToJsonSchema(tool.parameters) as Schema
+    parameters: toParameterSchema(tool) as Schema
   }))
 }
 
@@ -31,10 +31,16 @@ export async function handleFunctionCalls(
       const tool = toolMap.get(functionCall.name ?? "unknown")
 
       if (!tool) {
-        return
+        return {
+          name: functionCall.name,
+          response: {
+            error: `Unknown tool: ${functionCall.name}`
+          }
+        }
       }
 
-      const result = (await tool.execute(functionCall.args)) as unknown
+      const args: unknown = tool.parameters.parse(functionCall.args)
+      const result = (await tool.execute(args)) as unknown
 
       return {
         name: functionCall.name,
